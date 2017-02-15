@@ -1,0 +1,32 @@
+---
+driver:
+  name: docker
+## https://github.com/test-kitchen/kitchen-docker/issues/54
+  use_sudo: false
+## https://github.com/saltstack/salt/issues/2806    salt-call being run as a non-root user cannot publish via grain to target itself, but can target other minions by grain
+## https://github.com/saltstack/salt/issues/31266   Salt in Docker container cannot run dmidecode
+  privileged: true
+
+## faster transfer time
+transport:
+  name: sftp
+
+## https://github.com/simonmcc/kitchen-salt/blob/master/provisioner_options.md
+provisioner:
+  name: salt_solo
+  state_collection: true
+  collection_name: sift
+  state_top:
+    base:
+      '*':
+        - sift
+
+platforms:
+  - name: ubuntu-16.04
+#  - name: ubuntu-14.04
+
+suites:
+  - name: default
+    run_list:
+    attributes:
+
