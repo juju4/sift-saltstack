@@ -20,8 +20,8 @@ before_install:
   - gem install kitchen-docker
   - gem list
   - which kitchen
-  - kitchen diagnose --all
+  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen diagnose --all
 
 script:
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml bundle exec kitchen verify ${distribution}-${version//./}
+  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify ${distribution}-${version//./}
 
