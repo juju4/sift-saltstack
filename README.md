@@ -1,3 +1,5 @@
+[![Build Status - Master](https://travis-ci.org/juju4/sift-saltstack.svg?branch=master)](https://travis-ci.org/juju4/sift-saltstack)
+[![Build Status - Devel](https://travis-ci.org/juju4/sift-saltstack.svg?branch=devel)](https://travis-ci.org/juju4/sift-saltstack/branches)
 # Managing SIFT with Saltstack
 
 This is a **Work In Progress**. Organization and setup method might change. 
@@ -32,3 +34,20 @@ Reference: http://repo.saltstack.com/#ubuntu
 3. `sudo apt-get update`
 4. `sudo apt-get install salt-minion`
 5. `sudo service salt-minion stop` (Note: the SIFT install process will disable the minion altogether as we do not need it running as a service)
+
+## Continuous integration
+
+This role has a travis test (for github), and kitchen-test too (docker, lxd or vagrant/virtualbox).
+
+Once you ensured all necessary roles are present, You can test with:
+```
+$ gem install kitchen-salt kitchen-lxd_cli kitchen-sync kitchen-vagrant kitchen-docker
+$ cd /path/to/roles/sift-saltstack
+$ kitchen verify
+$ kitchen login
+$ kitchen diagnose --all
+$ KITCHEN_YAML=".kitchen.docker.yml" kitchen verify
+$ KITCHEN_YAML=".kitchen.lxd.yml" kitchen verify
+$ KITCHEN_YAML=".kitchen.vagrant.yml" kitchen verify
+```
+

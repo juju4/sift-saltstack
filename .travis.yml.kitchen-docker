@@ -1,0 +1,30 @@
+---
+dist: trusty
+sudo: required
+rvm:
+  - 2.2
+
+env:
+  - distribution: ubuntu
+    version: 16.04
+#  - distribution: ubuntu
+#    version: 14.04
+
+before_install:
+  - env
+  - pwd
+  - find -ls
+  - gem install kitchen
+  - gem update kitchen
+  - gem install kitchen-sync
+  - gem install kitchen-salt
+  - gem install kitchen-docker
+  - gem list
+  - which kitchen
+#  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen diagnose --all
+  - kitchen diagnose --all
+
+script:
+#  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify ${distribution}-${version//./}
+  - kitchen verify ${distribution}-${version//./}
+

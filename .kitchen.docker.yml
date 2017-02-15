@@ -14,8 +14,15 @@ transport:
 ## https://github.com/simonmcc/kitchen-salt/blob/master/provisioner_options.md
 provisioner:
   name: salt_solo
+## only from dir above sift
+#  formula: sift
+## Not enough
+#  formula: ../sift
+## OK
   state_collection: true
   collection_name: sift
+## NOK
+#  is_file_root: true
   state_top:
     base:
       '*':

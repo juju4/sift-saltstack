@@ -1,0 +1,31 @@
+---
+driver:
+  name: vagrant
+  provider: <%= ENV['KITCHEN_PROVIDER'] || 'virtualbox' %>
+
+## make file transfer faster. need https://github.com/coderanger/kitchen-sync
+transport:
+  name: sftp
+
+## https://github.com/simonmcc/kitchen-salt/blob/master/provisioner_options.md
+provisioner:
+  name: salt_solo
+## only from dir above sift
+#  formula: sift
+## OK
+  state_collection: true
+  collection_name: sift
+  state_top:
+    base:
+      '*':
+        - sift
+
+platforms:
+  - name: ubuntu-16.04
+#  - name: ubuntu-14.04
+
+suites:
+  - name: default
+    run_list:
+    attributes:
+
