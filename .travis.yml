@@ -58,8 +58,11 @@ before_install:
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- pwd"
 
 script:
-  - travis_wait 30 "sudo -E su $USER -c 'lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift'"
-  - travis_wait 30 'sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift"'
+  - travis_wait 30 "sudo -E su $USER -c \'lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift\'"
+  - travis_wait 30 "sudo -E su $USER -c \"lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift\""
+#  - travis_wait 30 "sudo -E su $USER -c 'lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift'"
+#  - travis_wait 30 'sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift"'
+  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift"
 
   - sudo -E su $USER -c "lxc stop run-${distribution}-${version//./} --force"
 
