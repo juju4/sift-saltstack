@@ -1,30 +1,38 @@
 ---
-dist: trusty
+## from https://github.com/geerlingguy/ansible-role-apache/blob/master/.travis.yml
 sudo: required
-rvm:
-  - 2.2
 
 env:
   - distribution: ubuntu
     version: 16.04
-#  - distribution: ubuntu
-#    version: 14.04
+    init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+
+services:
+  - docker
 
 before_install:
+  # - sudo apt-get update
+  # Pull container
+  - 'sudo docker pull ${distribution}:${version}'
   - env
   - pwd
   - find -ls
-  - gem install kitchen
-  - gem update kitchen
-  - gem install kitchen-sync
-  - gem install kitchen-salt
-  - gem install kitchen-docker
-  - gem list
-  - which kitchen
-#  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen diagnose --all
-  - kitchen diagnose --all
+  # Customize container
+  - 'sudo docker build --rm=true --file=test/travis/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:salt test'
 
 script:
-#  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify ${distribution}-${version//./}
-  - kitchen verify ${distribution}-${version//./}
+  - container_id=$(mktemp)
+    # Run container in detached state
+  - 'sudo docker run --detach --volume="${PWD%}":/tmp/salt/sift:ro ${run_opts} ${distribution}-${version}:salt "${init}" > "${container_id}"'
 
+  - 'sudo docker exec --tty "$(cat ${container_id})" salt-call --version'
+  - 'sudo docker exec --tty "$(cat ${container_id})" useradd -m sansforensics'
+
+  # syntax check? not currently https://github.com/saltstack/salt/issues/802
+
+  # Test role.
+  - 'sudo docker exec --tty "$(cat ${container_id})" salt-call --local --file-root=/tmp/salt state.sls sift'
+
+  # Clean up
+  - 'sudo docker stop "$(cat ${container_id})"'
