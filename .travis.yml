@@ -32,8 +32,8 @@ script:
   # syntax check? not currently https://github.com/saltstack/salt/issues/802
 
   # debug
-  - 'sudo docker exec --tty "$(cat ${container_id})" cat /etc/apt/sources.list"
-  - 'sudo docker exec --tty "$(cat ${container_id})" cat /etc/apt/sources.list.d/universal.list"
+  - 'sudo docker exec --tty "$(cat ${container_id})" cat /etc/apt/sources.list"'
+  - 'sudo docker exec --tty "$(cat ${container_id})" cat /etc/apt/sources.list.d/universal.list"'
 
   # Test role.
   - 'sudo docker exec --tty "$(cat ${container_id})" salt-call --local --file-root=/tmp/salt state.sls sift'
