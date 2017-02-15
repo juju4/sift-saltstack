@@ -53,7 +53,7 @@ before_install:
   - CUID=`sudo -E su $USER -c "lxc config show run-${distribution}-${version//./} | sed -ne '/idmap.next/ s/.*\"Hostid\":\([0-9]*\),.*/\1/p'"`
   - "echo setfacl -Rm user:$CUID:rwx ${PWD%/*}"
   - "setfacl -Rm \"user:$CUID:rwx\" ${PWD%/*} || true"
-  - sudo -E su $USER -c "lxc config device add run-${distribution}-${version//./} sharedroles disk path=/srv/salt/sift source=${PWD}"
+  - sudo -E su $USER -c "lxc config device add run-${distribution}-${version//./} sharedroles disk path=/tmp/salt/sift source=${PWD}"
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- mount"
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- pwd"
 
