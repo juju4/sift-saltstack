@@ -35,7 +35,7 @@ script:
   # syntax check? not currently https://github.com/saltstack/salt/issues/802
 
   # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" salt-call --local --file-root=/tmp/salt state.sls sift'
+  - 'sudo docker exec --tty "$(cat ${container_id})" salt-call --local --retcode-passthrough -l info --file-root=/tmp/salt state.sls sift'
 
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'

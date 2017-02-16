@@ -53,12 +53,14 @@ before_install:
   - CUID=`sudo -E su $USER -c "lxc config show run-${distribution}-${version//./} | sed -ne '/idmap.next/ s/.*\"Hostid\":\([0-9]*\),.*/\1/p'"`
   - "echo setfacl -Rm user:$CUID:rwx ${PWD%/*}"
   - "setfacl -Rm \"user:$CUID:rwx\" ${PWD%/*} || true"
-  - sudo -E su $USER -c "lxc config device add run-${distribution}-${version//./} sharedroles disk path=/srv/salt/sift source=${PWD}"
+  - sudo -E su $USER -c "lxc config device add run-${distribution}-${version//./} sharedroles disk path=/tmp/salt/sift source=${PWD}"
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- mount"
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- pwd"
 
 script:
-  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift"
+  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- salt-call --local --retcode-passthrough -l info --file-root=/tmp/salt state.sls sift"
+
+  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- time sh -x /tmp/salt/sift/test/integration/default/serverspec/run-local-tests.sh"
 
   - sudo -E su $USER -c "lxc stop run-${distribution}-${version//./} --force"
 
