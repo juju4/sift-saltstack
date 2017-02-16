@@ -58,7 +58,13 @@ before_install:
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- pwd"
 
 script:
-  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift"
+  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- salt-call --local --retcode-passthrough -l info --file-root=/tmp/salt state.sls sift"
+#  - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift"
+## NOK
+#  - travis_wait 30 "sudo -E su $USER -c \'lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift\'"
+#  - travis_wait 30 "sudo -E su $USER -c \"lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift\""
+#  - travis_wait 30 "sudo -E su $USER -c 'lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift'"
+#  - travis_wait 30 'sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- salt-call --local --file-root=/tmp/salt state.sls sift"'
 
   - sudo -E su $USER -c "lxc exec run-${distribution}-${version//./} -- time sh -x /tmp/salt/sift/test/integration/default/serverspec/run-local-tests.sh"
 
