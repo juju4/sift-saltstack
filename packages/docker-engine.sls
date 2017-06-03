@@ -1,2 +1,0 @@
-docker-engine:
-  pkg.installed

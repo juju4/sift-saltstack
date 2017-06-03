@@ -62,4 +62,3 @@ script:
 
   - sudo -E su $USER -c "lxc stop run-${distribution}-${version//./} --force"
 
-
