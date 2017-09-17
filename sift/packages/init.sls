@@ -92,6 +92,7 @@ include:
   - sift.packages.libpff-dev
   - sift.packages.libpff-python
   - sift.packages.libpff-tools
+  - sift.packages.libplist-utils
   - sift.packages.libregf
   - sift.packages.libregf-dev
   - sift.packages.libregf-python
@@ -124,6 +125,7 @@ include:
   - sift.packages.p0f
   - sift.packages.p7zip-full
   - sift.packages.pdftk
+  - sift.packages.perl
   - sift.packages.pev
   - sift.packages.phonon
   - sift.packages.pkg-config
@@ -152,7 +154,6 @@ include:
   - sift.packages.radare2
   - sift.packages.rar
   - sift.packages.readpst
-  - sift.packages.regripper
   - sift.packages.rsakeyfind
   - sift.packages.safecopy
   - sift.packages.samba
@@ -294,6 +295,7 @@ sift-packages:
       - sls: sift.packages.libpff-dev
       - sls: sift.packages.libpff-python
       - sls: sift.packages.libpff-tools
+      - sls: sift.packages.libplist-utils
       - sls: sift.packages.libregf
       - sls: sift.packages.libregf-dev
       - sls: sift.packages.libregf-python
@@ -326,6 +328,7 @@ sift-packages:
       - sls: sift.packages.p0f
       - sls: sift.packages.p7zip-full
       - sls: sift.packages.pdftk
+      - sls: sift.packages.perl
       - sls: sift.packages.pev
       - sls: sift.packages.phonon
       - sls: sift.packages.pkg-config
@@ -354,7 +357,6 @@ sift-packages:
       - sls: sift.packages.radare2
       - sls: sift.packages.rar
       - sls: sift.packages.readpst
-      - sls: sift.packages.regripper
       - sls: sift.packages.rsakeyfind
       - sls: sift.packages.safecopy
       - sls: sift.packages.samba

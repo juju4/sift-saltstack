@@ -3,7 +3,9 @@
 
 # Managing SIFT with Saltstack
 
-This is a **Work In Progress**. Organization and setup method might change. 
+## Issues 
+
+Please open issues over at the [SIFT Repository](https://github.com/sans-dfir/sift/issues/new?title=[SALTSTACK]%20-) with prefix '[SALTSTACK]'
 
 ## Supported Distributions
 
@@ -11,13 +13,21 @@ This is a **Work In Progress**. Organization and setup method might change.
 
 ## Installation
 
-1. create a fresh ubuntu 16.04, if using vmware, use easy install and create a user `sansforensics`
-2. install saltstack
-3. download the latest signed release from the github releases page (see below for instructions)
-  - Saltstack expects a certain folder structure, you'll need to have a root directory (eg- /tmp/salt)
-  - You'll need to clone or extract the tarball to /tmp/salt/sift (yes it must be named sift)
-  - Example: `git clone https://github.com/sans-dfir/sift-saltstack /tmp/salt`
-4. `sudo salt-call --local --file-root=/tmp/salt state.sls sift`
+### Preferred
+
+Use the [sift-cli](https://github.com/sans-dfir/sift-cli) tool.
+
+### Alternate (Manual)
+
+It is hightly recommended that you use the [sift-cli](https://github.com/sans-dfir/sift-cli) tool to install, update and upgrade SIFT.
+
+1. Ubuntu 16.04 Machine
+2. Install Saltstack (see below)
+3. Import the PGP Key - gpg --keyserver pgp.mit.edu --recv-keys 22598A94
+4. Download the latest signed [releases](https://github.com/sans-dfir/sift-saltstack/releases/latest) files
+5. Verify the latest signed release files with GPG
+6. Extract the `.tar.gz` file to `/tmp/salt` (make sure this README.md is in the root of /tmp/salt)
+7. `sudo salt-call -l info --local --file-root=/tmp/salt state.apply sift.vm`
 
 ### Customizing the Install
 
@@ -28,7 +38,7 @@ You have full control over what you want to install from the SIFT distro. To rea
 This is intended to replace Step 4 from above. This will install just the deb packages and python packages that makes up the SIFT distro, it will not create any users, change backgrounds, or any other customization of the linux install you are on.
 
 ```bash
-sudo salt-call --local --file-root=/tmp/salt state.sls sift.packages
+sudo salt-call -l info --local --file-root=/tmp/salt state.apply sift.pkgs
 ```
 
 ## Installing Saltstack

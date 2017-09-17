@@ -1,2 +1,0 @@
-regripper:
-  pkg.installed

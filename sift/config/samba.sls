@@ -1,24 +1,25 @@
+{%- set user = salt['pillar.get']('sift_user', 'sansforensics') -%}
 include:
   - ..packages.samba
 
-samba-config:
+sift-samba-global-config:
   file.managed:
     - name: /etc/samba/smb.conf
     - source: salt://sift/files/samba/smb.conf
-    - replace: False
+    - template: jinja
+    - context:
+          user: {{ user }}
     - require:
       - pkg: samba
 
 samba-service-smbd:
   service.running:
     - name: smbd
-    - reload: True
     - watch:
-      - file: /etc/samba/smb.conf
+      - file: sift-samba-global-config
 
 samba-service-nmbd:
   service.running:
     - name: nmbd
-    - reload: True
     - watch:
-      - file: /etc/samba/smb.conf
+      - file: sift-samba-global-config
