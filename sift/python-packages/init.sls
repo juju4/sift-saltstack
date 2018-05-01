@@ -1,5 +1,6 @@
 include:
   - sift.python-packages.analyzemft
+  - sift.python-packages.appcompatprocessor
   - sift.python-packages.argparse
   - sift.python-packages.bitstring
   - sift.python-packages.colorama
@@ -9,6 +10,7 @@ include:
   - sift.python-packages.geoip2
   - sift.python-packages.ioc_writer
   - sift.python-packages.lxml
+  - sift.python-packages.machinae
   - sift.python-packages.pefile
   - sift.python-packages.pip
   - sift.python-packages.pysocks
@@ -33,6 +35,7 @@ sift-python-packages:
     - name: sift-python-packages
     - require:
       - sls: sift.python-packages.analyzemft
+      - sls: sift.python-packages.appcompatprocessor
       - sls: sift.python-packages.argparse
       - sls: sift.python-packages.bitstring
       - sls: sift.python-packages.colorama
@@ -42,6 +45,7 @@ sift-python-packages:
       - sls: sift.python-packages.geoip2
       - sls: sift.python-packages.ioc_writer
       - sls: sift.python-packages.lxml
+      - sls: sift.python-packages.machinae
       - sls: sift.python-packages.pefile
       - sls: sift.python-packages.pip
       - sls: sift.python-packages.pysocks
