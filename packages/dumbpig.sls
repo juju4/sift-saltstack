@@ -1,2 +1,0 @@
-dumbpig:
-  pkg.installed

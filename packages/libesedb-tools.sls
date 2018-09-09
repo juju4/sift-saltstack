@@ -1,2 +1,0 @@
-libesedb-tools:
-  pkg.installed

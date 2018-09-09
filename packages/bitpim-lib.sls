@@ -1,2 +1,0 @@
-bitpim-lib:
-  pkg.installed

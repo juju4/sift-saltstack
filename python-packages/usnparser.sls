@@ -1,2 +1,0 @@
-usnparser:
-  pip.installed

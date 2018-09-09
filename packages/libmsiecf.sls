@@ -1,2 +1,0 @@
-libmsiecf:
-  pkg.installed

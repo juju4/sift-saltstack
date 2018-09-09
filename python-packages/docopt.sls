@@ -1,2 +1,0 @@
-docopt:
-  pip.installed

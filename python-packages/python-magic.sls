@@ -1,2 +1,0 @@
-python-magic:
-  pip.installed

@@ -1,2 +1,0 @@
-libewf-dev:
-  pkg.installed

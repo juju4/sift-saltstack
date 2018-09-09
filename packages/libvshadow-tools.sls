@@ -1,2 +1,0 @@
-libvshadow-tools:
-  pkg.installed

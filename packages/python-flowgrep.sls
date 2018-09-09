@@ -1,2 +1,0 @@
-python-flowgrep:
-  pkg.installed

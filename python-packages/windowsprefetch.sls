@@ -1,2 +1,0 @@
-windowsprefetch:
-  pip.installed

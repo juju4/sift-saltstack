@@ -1,2 +1,0 @@
-libbde-tools:
-  pkg.installed

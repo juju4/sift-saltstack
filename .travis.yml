@@ -1,41 +1,19 @@
----
-## from https://github.com/geerlingguy/ansible-role-apache/blob/master/.travis.yml
 sudo: required
 
-## FIXME! stalling sometimes...
-##  https://travis-ci.org/juju4/sift-saltstack/builds/201936507 stall
-##  https://travis-ci.org/juju4/sift-saltstack/builds/201906763 execute
-env:
-  - distribution: ubuntu
-    version: 16.04
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
 services:
-  - docker
+- docker
 
 before_install:
-  # - sudo apt-get update
-  # Pull container
-  - 'sudo docker pull ${distribution}:${version}'
-  - env
-  - pwd
-  - find -ls
-  # Customize container
-  - 'sudo docker build --rm=true --file=test/travis/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:salt test'
+- docker pull sansdfir/sift-salt-tester
 
 script:
-  - container_id=$(mktemp)
-    # Run container in detached state
-  - 'sudo docker run --detach --volume="${PWD%}":/tmp/salt/sift:ro ${run_opts} ${distribution}-${version}:salt "${init}" > "${container_id}"'
+- ./scripts/test.sh
 
-  - 'sudo docker exec --tty "$(cat ${container_id})" salt-call --version'
-  - 'sudo docker exec --tty "$(cat ${container_id})" useradd -m sansforensics'
+after_success:
+- ./scripts/publish-draft.sh
 
-  # syntax check? not currently https://github.com/saltstack/salt/issues/802
-
-  # Test role.
-  - 'sudo docker exec --tty "$(cat ${container_id})" salt-call --local --retcode-passthrough -l info --file-root=/tmp/salt state.sls sift'
-
-  # Clean up
-  - 'sudo docker stop "$(cat ${container_id})"'
+env:
+  matrix:
+    - TEST_SIFT_VERSION=stable
+  global:
+    secure: OOeIrkKyv4vFGkwpiUYJWJyI2lOhyCxFd5p/0+4vGwWh3NzL3AXfc6GcUBogCqG+LAz+qz9IzwSxjhzswKaPnBArEWf7hov3Z4Lq8pUR5Uywpqww13RoTtyK2xOMLYZpYfLLh/8RQG6RSVj7bAQfiurrq4HoM9Np1ALzOhreTptQ5OJdpnj5Nlxty6azL7tqHCxlOZI6Kg24nVS4KZcwMhoqlWpfH0WnhbTdlS63DwhqgsEa0VIANwmvfDYoXDvRPPAW5UJ0Ij+ZJi5MLb65sGZLIYz8La/BknfFbpTvyXnacz3WSrk/yThU0bZzCgAWb5hXrOPOUHnsadO/hA4XZ3ovwfcTYDLgw5iZHT4oCDVQMX8rGK2/Xae1FSoYSCRxXNgwx3SQf2tOj385Xn6/TPJN9LZFIzzEC2YDBN/aXMNHXpbgyYDLAHD78rxLO4zWP+oJn5mMKeg6ElowAMX7Zr6KjoxlQY+OuyZxlWYwwzhjyP40S5hiWy6aHnwADFQyYS202XjsYFblpG03NR9hj1HIS+Yg21NgLNRu1okNBSFNpPAGww6MLypmXEXEj0nJlOylWkfIdu2flS9vKxnkndYG5z1U803DnGk48nbAxRZhU9W2Q2UPB7HKGyrw0dm5ERCbvDpZIa0Hxk7c/3y7aY4QQTj+lSj0ALeF+71HRoU=

@@ -1,2 +1,0 @@
-python-ntdsxtract:
-  pkg.installed

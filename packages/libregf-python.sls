@@ -1,2 +1,0 @@
-libregf-python:
-  pkg.installed

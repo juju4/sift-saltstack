@@ -1,2 +1,0 @@
-six:
-  pip.installed

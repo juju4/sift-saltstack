@@ -1,2 +1,0 @@
-libolecf:
-  pkg.installed
